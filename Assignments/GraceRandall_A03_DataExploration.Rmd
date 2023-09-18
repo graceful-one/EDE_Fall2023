@@ -1,6 +1,6 @@
 ---
 title: "Assignment 3: Data Exploration"
-author: "Student Name"
+author: "Grace Randall"
 date: "Fall 2023"
 output: pdf_document
 geometry: margin=2.54cm
@@ -26,7 +26,7 @@ This exercise accompanies the lessons in Environmental Data Analytics on Data Ex
 
 **TIP**: If your code fails to knit, check that no `install.packages()` or `View()` commands exist in your code. 
 
----
+--- 
 
 ## Set up your R session
 
