@@ -122,17 +122,19 @@ In many cases, we will want to combine datasets into one dataset. If all column 
 
 In dplyr, there are several types of join functions: 
 
-* `inner_join`: return rows in x where there are matching values in y, and all columns in x and y (mutating join).
+* `inner_join`: return rows in x where there are matching values in y, and all columns in x and y (mutating join). 
 * `semi_join`: return all rows from x where there are matching values in  y, keeping just columns from x (filtering join).
-* `left_join`: return all rows from x, and all columns from x and y (mutating join).
+* `left_join`: return all rows from x, and all columns from x and y (mutating join). this just adds to rows in x that also have data in y
 * `anti_join`: return all rows from x where there are *not* matching values in y, keeping just columns from x (filtering join).
-* `full_join`: return all rows and all columns from x and y. Returns NA for missing values (mutating join).
+* `full_join`: return all rows and all columns from x and y. Returns NA for missing values (mutating join). this keeps everything
 
 Let's say we want to generate a new dataset that contains all possible physical and chemical data for Peter and Paul Lakes. In this case, we want to do a full join.
 
 ```{r joining data}
 
-NTL.phys.nutrient.data.PeterPaul <- full_join(NTL.phys.data.PeterPaul.subset, NTL.nutrient.data.PeterPaul.subset)
+NTL.phys.nutrient.data.PeterPaul <- full_join(NTL.phys.data.PeterPaul.subset, NTL.nutrient.data.PeterPaul.subset) 
+#tells you what it joins by, what columns
+#output file has all the common ones columns, and all the physical and all the chemical, not that many that have measruemnts at the same time 
 
 write.csv(NTL.phys.nutrient.data.PeterPaul, row.names = FALSE, 
           file ="./Data/Processed/NTL-LTER_Lake_Chemistry_Nutrients_PeterPaul_Processed.csv")
@@ -148,11 +150,13 @@ Litter.June2016 <- read.csv("./Data/Raw/NIWO_Litter/NEON_NIWO_Litter_massdata_20
 Litter.July2016 <- read.csv("./Data/Raw/NIWO_Litter/NEON_NIWO_Litter_massdata_2016-07_raw.csv")
 Litter.August2016 <- read.csv("./Data/Raw/NIWO_Litter/NEON_NIWO_Litter_massdata_2016-08_raw.csv")
 
+#this brings together ones that already have the same columns but different rows, or muliple datasets measureing the same qualities
 Litter.2019 <- rbind(Litter.June2016, Litter.July2016, Litter.August2016)
 ```
 
 However, there are 20 months in this dataset, so importing all these files individually would be tedious to code. Here is a more efficient way to import and combine all files.
 
+makes a list of all the files
 ```{r import many datasets}
 LitterFiles = list.files(path = "./Data/Raw/NIWO_Litter/", pattern="*.csv", full.names=TRUE)
 LitterFiles
