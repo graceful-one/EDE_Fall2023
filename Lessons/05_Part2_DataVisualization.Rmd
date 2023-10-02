@@ -35,6 +35,7 @@ PeterPaul.chem.nutrients.gathered$sampledate <- ymd(PeterPaul.chem.nutrients.gat
 
 ### Themes
 Often, we will want to change multiple visual aspects of a plot. Ggplot comes with pre-built themes that will adjust components of plots if you call that theme. 
+visual aspecs, has preset themes 
 ```{r, fig.height = 3, fig.width = 4, warning = FALSE}
 O3plot <- ggplot(EPAair) +
   geom_point(aes(x = Date, y = Ozone)) 
@@ -42,23 +43,23 @@ print(O3plot)
 
 O3plot1 <- ggplot(EPAair) +
   geom_point(aes(x = Date, y = Ozone)) +
-  theme_gray()
+  theme_gray() #default background
 print(O3plot1)
 
 O3plot2 <- ggplot(EPAair) +
   geom_point(aes(x = Date, y = Ozone)) +
-  theme_bw()
+  theme_bw() #no gray background
 print(O3plot2)
 
 O3plot3 <- ggplot(EPAair) +
   geom_point(aes(x = Date, y = Ozone)) +
-  theme_light()
+  theme_light()#very similar to black and white 
 print(O3plot3)
 
 O3plot4 <- ggplot(EPAair) +
   geom_point(aes(x = Date, y = Ozone)) +
   theme_classic()
-print(O3plot4)
+print(O3plot4) #no gridlines
 ```
 
 Notice that some aspects of your graph have not been adjusted, including: 
@@ -70,6 +71,7 @@ Notice that some aspects of your graph have not been adjusted, including:
 If you would like to set a common theme across all plots in your analysis session, you may define a theme and call up that theme for each graph. This eliminates the need to add multiple lines of code in each plot. 
 
 ```{r, fig.height = 3, fig.width = 4, warning = FALSE}
+#set up your own theme and save it. 
 mytheme <- theme_classic(base_size = 14) +
   theme(axis.text = element_text(color = "black"), 
         legend.position = "top") #alternative: legend.position + legend.justification
@@ -81,7 +83,7 @@ O3plot5 <- ggplot(EPAair) +
   mytheme
 print(O3plot5)  
 
-theme_set(mytheme)
+theme_set(mytheme) # set to be the defalt going forward in the code
 
 O3plot6 <- ggplot(EPAair) +
   geom_point(aes(x = Date, y = Ozone))
@@ -93,17 +95,19 @@ print(O3plot6)
 
 While the theme allows us to set multiple aspects of plots, ggplot allows us to adjust other parts of plots outside of the theme. 
 
-```{r, fig.height = 3, fig.width = 4, warning = FALSE}
+```{r fig.height=6, fig.width=8, warning=FALSE}
 O3plot7 <- ggplot(EPAair, aes(x = Date, y = Ozone)) +
-  geom_hline(yintercept = 50, lty = 2) +
-  geom_hline(yintercept = 100, lty = 2) +
-  geom_point(alpha = 0.5, size = 1.5) +
+  geom_hline(yintercept = 50, lty = 2) + #horizontal line at 50
+  geom_hline(yintercept = 100, lty = 2) + #horizontal line at 100
+  geom_point(alpha = 0.5, size = 1.5) + #
+  #next few lines add text to the plot, just tell it where
   geom_text(x = as.Date("2020-01-01"), y = 45, label = "good", hjust = 1, fontface = "bold") +   # hjust = 1 means left align
   geom_text(x = as.Date("2020-01-01"), y = 95, label = "moderate", hjust = 1, fontface = "bold") +
   geom_text(x = as.Date("2020-01-01"), y = 120, label = "unhealthy (sensitive groups)", hjust = 1, fontface = "bold") +
+  #set range to be plotted
   scale_x_date(limits = as.Date(c("2018-01-01", "2019-12-31")), 
     date_breaks = "2 months", date_labels = "%b %y") +
-  ylab(expression("O"[3]* " AQI Value")) +
+  ylab(expression("O"[3]* " AQI Value")) + # changes y label 
   theme(axis.text.x = element_text(angle = 45,  hjust = 1))
 print(O3plot7)  
 
@@ -152,9 +156,9 @@ nationalparkcolors (package)
 * https://github.com/katiejolly/nationalparkcolors
 
 ```{r, warning = FALSE}
-# install.packages("viridis")
-# install.packages("RColorBrewer")
-# install.packages("colormap")
+#install.packages("viridis")
+#install.packages("RColorBrewer")
+#install.packages("colormap")
 library(viridis)
 library(RColorBrewer)
 library(colormap)
@@ -178,7 +182,7 @@ NvsP2 <-
   #labs() + # change your legend labels here
   scale_shape_manual(values = c(15, 17)) +
   #scale_color_distiller(palette = "Blues", direction = 1) + # use scale_color_brewer for discrete variables
-  scale_color_viridis(option = "magma", direction = -1) +
+  scale_color_viridis(option = "magma", direction = -1) + 
   theme(legend.position = "right", 
         legend.text = element_text(size = 12), legend.title = element_text(size = 12))
 print(NvsP2)
@@ -207,6 +211,7 @@ A useful guide for aligning plots by axis can be found here: https://wilkelab.or
 
 ```{r, fig.height = 7, fig.width = 6}
 #install.packages("cowplot")
+#puts multiple plots in a grid
 library(cowplot)
 plot_grid(NvsP2, Nutrientplot, nrow = 2, align = 'h', rel_heights = c(1.25, 1))
 
