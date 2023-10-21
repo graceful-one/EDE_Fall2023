@@ -1,0 +1,173 @@
+---
+title: "Crafting Reports"
+subtitle: "ENV 859 - Environmental Data Exploration"
+author: "John Fay & Luana Lima"
+date: "Fall 2023"
+output:  ioslides_presentation 
+---
+
+## Learning Outcomes
+-   Explain why we use RMarkdown & knit to PDF
+-   Navigate YAML & use it to enhance to your documents
+-   Control how *code* appears in knit output:\
+    code chunk settings
+-   Control how *text* appears in knit output:\
+    markdown techniques
+-   Understand the knitting process and\
+    how it converts Rmd to PDF, HTML, etc.
+
+## Use of RStudio & RMarkdown so far...
+-   We have provided you with Rmd files
+-   Write/edit code (code chunks)
+-   Document that code (text blocks)
+-   Generate PDFs of code and its outputs
+-   Integrate with Git/GitHub for version control
+
+notes: we mostly worked with already given rmd documents
+
+## Advantanges of RMarkdown
+### Why do we use RMarkdown?
+-   Written in basic text (fully reproducible)
+-   Works well with version control
+-   Allows for code and documentation in one file
+-   When knit, can produce tidy output in many file formats
+Notes: dont need any specific software, raw text, good for 
+reproducibility. can generate a lot of documents
+
+## RMarkdown: A deeper look
+### The three components of RMarkdown
+-   YAML
+-   Text (markdown)
+-   Code (R or ???)
+
+## YAML: What is it?
+-   "Yet another markdown language"\
+    "YAML ain't markdown language"
+-   Always at the beginning of an Rmd
+-   Enclosed by three dashes `---`
+-   Includes instructions applied when knitting
+-   Instructions take the form of `key`:`value` pairs
+Notes: that bit at the start, knitting instructions, 
+form of key value pairs. example "title:'something'"
+also gives what the output type is 
+
+## YAML, An Exercise
+1.  Create a new Rmd in R
+2.  Set the title, author, date
+3.  Set output to be PDF
+4.  View the YAML in the Rmd produced
+5.  Knit the document & view the PDF
+6.  Add new entries:
+    -   `subtitle: "A draft copy"`
+    -   `toc: true`
+7.  Add a few markdown headers (`##`)
+8.  Knit and view...
+notes: creates pdf, title, name, and title. 6 adds a subtitle and 
+table of contents 
+"##" - header
+"###" - subheader
+"+" - subbullet
+
+## YAML, A Recap
+-   YAML setting apply to the entire document
+-   YAML is read in the knit process
+-   YAML has even more advanced settings\
+    [Markdown Cheat sheet](https://raw.githubusercontent.com/rstudio/cheatsheets/main/rmarkdown.pdf)\
+    <https://bookdown.org/yihui/rmarkdown/pdf-document.html>
+notes: cheat sheet has a lot of helpful info
+
+## The knitting process
+-   The knitting sequence [![image link](img/rmarkdownflow.png)](https://env872.github.io/assets/images/rmarkdownflow.png)
+-   `Rmd`→[*knitr*]→`md`:\
+    Guided by instructions in YAML & Code chunks
+-   `md`→[*Pandoc*]→`PDF`:\
+    Markdown translated into PDF\|HTML\|Word\|... by Pandoc
+-   Example...
+notes: what happens when you knit a doc? knitting engages 
+knitir,a package that deals with rmd. then becomes general
+markdown pandoc then takes that and makes it into a file.  
+
+## Code Chunks: Recap
+-   Where code is executed
+-   Surrounded by triplets of tics: ```` ``` ````
+-   Chunks have attributes, set within `{  }`\
+    For example: `{r plot AQI, echo=FALSE}`
+notes: attributes, first what language then name of code chunk
+then it can have other mods, can set other languages but need 
+to have them downloaded
+
+## Code Chunks: Example
+-   Shortcuts to create
+-   Coding languages
+-   Setting chunk attributes
+    - <https://yihui.org/knitr/options/#chunk-options>
+    - <https://bookdown.org/yihui/rmarkdown/r-code.html>
+-   Global code chunk attributes\
+    `knitr::opts_chunk$set(echo = TRUE)`
+Notes: in brackets can set what prints and doesn't, what does
+what in the the cheat sheet. 
+echo=FALSE - doesnt show the code just output
+include=FALSE - doesnt show output or the code
+eval=FALSE - dont run
+    
+## Code Chunks: Plots and Figures
+-   `fig.cap`: Set figure Caption
+-   `fig.width`, `fig.height`: Set figure size, or...
+-   `fig.dim` to set both (e.g. `fig.dim = c(5,3)`)
+-   `out.width`, `out.height`: scale figs in output docs\
+    e.g. `out.width=80%` to set at 80% of page width
+-   `fig.align`: set alignment (`left', 'center', etc.)
+Notes: can set size - more relevant for knitting. fig cap 
+gives caption and auto numbers the figures. but if you put 
+it in chunk then they will give all the ones in the same chunk
+the same caption. to give different ones each in own chunk.
+newpage-pagebreak
+ 
+## Markdown: Recap
+###   Common stylings:
+-   `#`: headings
+-   `>`: block quotes
+-   Ordered and unordered lists...
+-   Hyperlinks...
+notes: ordered lists can be done with 1. thing
+needs to have the space. unordered can be done with * or -,
+sub bullets by + 
+clickable link [link name](web address)
+can edit template to make it look different
+ 
+
+## Markdown: Documentation
+-   Quick reference
+-   Cheatsheet
+-   Reference Guide
+
+## Markdown: Exercises
+-   Creating tables
+-   Inserting images
+-   Additional text formatting
+notes: images done with ![image link](path to image)
+can do file online, but struggles to knit to pdf then 
+
+## Markdown: Useful techniques
+-   `\newpage`
+-   `\listoftables`
+-   `\listoffigurres`
+-   `---`
+-   Using the *Visual Editor*!
+note: vistual shows it a clearer format sometimes but
+can update code to its defaults 
+
+## Pretty tables with `kable`
+-   Part of the `knitr` package
+-   Convert a dataframe to a markdown table\
+    Makes for aethetic output
+-   Example...
+notes: can also add column names or a caption
+
+## Exercises!
+-   Open `06_LakeReport.Rmd` and knit as is
+-   Add a table of contents
+-   Set the first code chunk to run, but:
+    -  code is not shown in knit output
+    -  warnings are not shown in output 
+    
