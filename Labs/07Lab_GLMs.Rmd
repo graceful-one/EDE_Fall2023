@@ -5,7 +5,7 @@ date: "Fall 2023"
 output: pdf_document
 geometry: margin=2.54cm
 editor_options: 
-  chunk_output_type: console
+  chunk_output_type: inline
 ---
 
 ## Objectives
@@ -49,6 +49,9 @@ Create three plots, each with appropriately formatted axes and legends. Choose a
 ```{r}
 #Exercise 1:
 
+ggplot(EPAair) +
+  geom_density(aes(x=))
+
 
 ```
 
@@ -61,12 +64,16 @@ For the NTL-LTER dataset, can we predict PM2.5 from Ozone?
 ```{r}
 
 #Exercise 2: Run a linear regression PM2.5 by Ozone. Find the p-value and R-squared value. 
-
-
+regression <- lm(data=EPAair, PM2.5 ~ Ozone)
+summary(regression)
 
 #Exercise 3: Build a scatterplot. Add a line and standard error for the linear regression. Add the regression equation to the plot
 
-
+pmbyo3 <- 
+  ggplot(EPAair, aes(x = Ozone, y = PM2.5)) +
+  geom_smooth(method = "lm") +
+  geom_point() 
+print(pmbyo3) 
 
 ```
 
