@@ -92,10 +92,10 @@ Below we read in the USA counties shapefile, filtering for just the NC features 
 counties_sf<- st_read(here('Data/Spatial/cb_2018_us_county_20m.shp')) %>% 
   filter(STATEFP == 37) #Filter for just NC Counties
 
-#
+# check colum names
 colnames(counties_sf)
 
-#
+# check coordinate reference system
 st_crs(counties_sf) 
 
 
@@ -118,19 +118,19 @@ mapView(counties_sf, zcol = "AWATER")
 
 ```{r read HUCs shapefile}
 #Read the shapefile into an sf dataframe named "huc8_sf"
-
+huc8_sf<- st_read(here('./Data/Spatial/NCHUC8.shp'))
 
 #Reveal the columns
-
+colnames(huc8_sf)
 
 #Check the CRS
-
+st_crs(huc8_sf) 
 
 #Examine some records
 head(huc8_sf)
 
 #View the data as a map, colored by the acreage in each
-
+mapView(huc8_sf, zcol = "ACRES")
 
 
 
@@ -142,13 +142,15 @@ head(huc8_sf)
 
 ```{r Select the Upper Neuse HUC 8}
 #Read the shapefile into an sf dataframe
+huc8_sf_neuse<- st_read(here('./Data/Spatial/NCHUC8.shp')) %>% 
+  filter(SUBBASIN == 'Upper Neuse')
 
 
 
 #Create a map
 
-
-
+mapView(huc8_sf, col.region="orange")+
+  mapView(huc8_sf_neuse, col.region="purple")
 
 ```
 
